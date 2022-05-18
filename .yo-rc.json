@@ -1,0 +1,17 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "plusBeta": false,
+    "isCreatingSolution": false,
+    "version": "1.14.0",
+    "libraryName": "soco-technical-challenge",
+    "libraryId": "b14d65f0-0033-4320-9737-ba0cd141b769",
+    "environment": "spo",
+    "packageManager": "npm",
+    "solutionName": "soco-technical-challenge",
+    "solutionShortDescription": "soco-technical-challenge description",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "componentType": "adaptiveCardExtension",
+    "aceTemplateType": "Image"
+  }
+}

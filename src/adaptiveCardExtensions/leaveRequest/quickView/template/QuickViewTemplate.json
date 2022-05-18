@@ -1,0 +1,76 @@
+{
+  "schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.3",
+  "body": [
+    {
+      "type": "TextBlock",
+      "weight": "Bolder",
+      "text": "${strings.CommonLeaveBalances}"
+    },
+    {
+      "type": "FactSet",
+      "$data": "${leaveBalances}",
+      "facts": [
+        {
+          "title": "${leaveTypeLabel}",
+          "value": "${leaveBalance}"
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "separator": true,
+      "weight": "Bolder",
+      "text": "${strings.CommonLeaveRequest}"
+    },
+    {
+      "type": "Input.Date",
+      "id": "leaveStartDate",
+      "label": "${strings.CommonStartDate}",
+      "value": "${leaveStartDate}",
+      "isRequired": true,
+      "errorMessage": "${strings.CommonPleaseSelectADate}",
+      "placeholder": "${strings.CommonSelectDate}"
+    },
+    {
+      "type": "Input.Date",
+      "isRequired": true,
+      "errorMessage": "${strings.CommonPleaseSelectADate}",
+      "label": "${strings.CommonReturnToWork}",
+      "value": "${leaveFinishDate}",
+      "id": "leaveFinishDate",
+      "placeholder": "${strings.CommonSelectDate}"
+    },
+    {
+      "type": "Input.Number",
+      "label": "${strings.CommonCalculatedHours}",
+      "id": "leaveCalculatedHours",
+      "placeholder": "${strings.PhraseThisWillBeFilledWhen}",
+      "min": 0,
+      "value": "${leaveCalculatedHours}",
+      "$when": "${leaveCalculatedHours > 0}"
+
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "${strings.CommonCalculateHours}",
+      "verb": "calculateHours",
+      "data": {
+        "id": "calculateHours"
+      }
+    },
+    {
+      "type": "Action.Submit",
+      "title": "${strings.CommonSubmitForApproval}",
+      "verb": "submitForApproval",
+      "data": {
+        "id": "submitForApproval"
+      },
+      "$when": "${$root.leaveCalculatedHours > 0}",
+      "isEnabled": "${$root.submitting == false}"
+    }
+  ]
+}

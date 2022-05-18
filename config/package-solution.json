@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "soco-technical-challenge-client-side-solution",
+    "id": "b14d65f0-0033-4320-9737-ba0cd141b769",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.14.0"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "soco-technical-challenge description"
+      },
+      "longDescription": {
+        "default": "soco-technical-challenge description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "soco-technical-challenge Feature",
+        "description": "The feature that activates elements of the soco-technical-challenge solution.",
+        "id": "2882df39-5e57-46f4-afd3-ccde44df02ac",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/soco-technical-challenge.sppkg"
+  }
+}
