@@ -1,8 +1,8 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
-    "name": "soco-technical-challenge-client-side-solution",
-    "id": "b14d65f0-0033-4320-9737-ba0cd141b769",
+    "name": "spfx-leave-request-ace-client-side-solution",
+    "id": "4af61edd-cf73-4ac5-b343-b72f96871246",
     "version": "1.0.0.0",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
@@ -12,14 +12,14 @@
       "websiteUrl": "",
       "privacyUrl": "",
       "termsOfUseUrl": "",
-      "mpnId": "Undefined-1.14.0"
+      "mpnId": "Undefined-1.19.0"
     },
     "metadata": {
       "shortDescription": {
-        "default": "soco-technical-challenge description"
+        "default": "spfx-leave-request-ace description"
       },
       "longDescription": {
-        "default": "soco-technical-challenge description"
+        "default": "spfx-leave-request-ace description"
       },
       "screenshotPaths": [],
       "videoUrl": "",
@@ -27,14 +27,14 @@
     },
     "features": [
       {
-        "title": "soco-technical-challenge Feature",
-        "description": "The feature that activates elements of the soco-technical-challenge solution.",
-        "id": "2882df39-5e57-46f4-afd3-ccde44df02ac",
+        "title": "spfx-leave-request-ace Feature",
+        "description": "The feature that activates elements of the spfx-leave-request-ace solution.",
+        "id": "fe5d31cc-4216-43b8-83b9-c905ae4c0084",
         "version": "1.0.0.0"
       }
     ]
   },
   "paths": {
-    "zippedPackage": "solution/soco-technical-challenge.sppkg"
+    "zippedPackage": "solution/spfx-leave-request-ace.sppkg"
   }
 }

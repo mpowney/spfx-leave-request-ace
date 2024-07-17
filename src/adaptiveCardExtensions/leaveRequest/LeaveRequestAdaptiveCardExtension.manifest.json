@@ -22,7 +22,7 @@
     "officeFabricIconFontName": "SharePointLogo",
     "cardSize": "Large",
     "properties": {
-      "title": "LeaveRequest",
+      "title": "Leave Balances and Requests",
       "description": "LeaveRequest description",
       "iconProperty": "" // Default to sharepointlogo
     }

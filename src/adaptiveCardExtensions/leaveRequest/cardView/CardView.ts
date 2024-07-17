@@ -11,6 +11,7 @@ import {
 	ILeaveRequestAdaptiveCardExtensionState,
 	QUICK_VIEW_REGISTRY_ID,
 } from "../LeaveRequestAdaptiveCardExtension";
+import * as cardImage from "../assets/beach_PNG3.png";
 
 export class CardView extends BaseImageCardView<ILeaveRequestAdaptiveCardExtensionProps, ILeaveRequestAdaptiveCardExtensionState> {
 	/**
@@ -21,20 +22,20 @@ export class CardView extends BaseImageCardView<ILeaveRequestAdaptiveCardExtensi
 		return this.state.loading
 			? undefined
 			: [
-					{
-						title: strings.CommonRequestLeave,
-						action: {
-							type: "QuickView",
-							parameters: {
-								view: QUICK_VIEW_REGISTRY_ID,
-							},
+				{
+					title: strings.CommonRequestLeave,
+					action: {
+						type: "QuickView",
+						parameters: {
+							view: QUICK_VIEW_REGISTRY_ID,
 						},
 					},
-			  ];
+				},
+			];
 	}
 
 	public get data(): IImageCardParameters {
-		const cardImage: string = require("../assets/suitcase.png");
+		
 		const iconUrl: string = "https://raw.githubusercontent.com/microsoft/fluentui-system-icons/master/assets/Brightness%20High/SVG/ic_fluent_brightness_high_24_regular.svg";
 		return this.state.loading
 			? {
@@ -42,7 +43,7 @@ export class CardView extends BaseImageCardView<ILeaveRequestAdaptiveCardExtensi
 					imageUrl: cardImage,
 					iconProperty: iconUrl,
 					title: strings.CommonLeaveRequest,
-			  }
+			}
 			: this.state.annualLeaveBalance && this.state.annualLeaveBalance > 0
 			? {
 					primaryText:
@@ -50,19 +51,19 @@ export class CardView extends BaseImageCardView<ILeaveRequestAdaptiveCardExtensi
 							? strings.PhraseYouHaveHoursAnnualLeaveWithUnapproved.replace("{0}", `${this.state.annualLeaveBalance}`).replace(
 									"{1}",
 									`${this.state.unnapprovedAnnualLeaveBalance || 0}`
-							  )
+							)
 							: strings.PhraseYouHaveHoursAnnualLeave.replace("{0}", `${this.state.annualLeaveBalance}`),
 
 					imageUrl: cardImage,
 					iconProperty:iconUrl,
 					title: strings.CommonLeaveRequest,
-			  }
+			}
 			: {
 					primaryText: strings.PhraseCannotFindAnyAnnualLeave,
 					imageUrl: cardImage,
 					iconProperty: iconUrl,
 					title: strings.CommonLeaveRequest,
-			  };
+			};
 	}
 
 	public get onCardSelection(): IQuickViewCardAction | IExternalLinkCardAction | undefined {
@@ -73,6 +74,6 @@ export class CardView extends BaseImageCardView<ILeaveRequestAdaptiveCardExtensi
 					parameters: {
 						view: QUICK_VIEW_REGISTRY_ID,
 					},
-			  };
+			};
 	}
 }

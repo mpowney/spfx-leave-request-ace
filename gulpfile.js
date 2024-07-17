@@ -13,9 +13,4 @@ build.rig.getTasks = function () {
   return result;
 };
 
-// ********* ADDED for @pnp/pnpjs 3.0 support *******
-// disable tslint
-build.tslintCmd.enabled = false;
-// ********* ADDED for @pnp/pnpjs 3.0 support*******
-
 build.initialize(require('gulp'));

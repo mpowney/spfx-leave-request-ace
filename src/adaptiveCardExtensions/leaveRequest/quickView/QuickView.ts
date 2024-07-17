@@ -4,6 +4,7 @@ import * as strings from "LeaveRequestAdaptiveCardExtensionStrings";
 import { LeaveRequest } from "../../../dal/leave/LeaveRequest";
 import { LeaveType } from "../../../model/LeaveType";
 import { ILeaveRequestAdaptiveCardExtensionProps, ILeaveRequestAdaptiveCardExtensionState } from "../LeaveRequestAdaptiveCardExtension";
+import * as card from "./template/QuickViewTemplate.json";
 
 export interface IQuickViewData {
 	leaveBalances: [{ leaveTypeLabel: string; leaveBalance: string }];
@@ -25,7 +26,7 @@ export class QuickView extends BaseAdaptiveCardView<
 		let daysToRemove = 0;
 		do {
 			const today = new Date(workingDate).getDay();
-			if (today == 0 || today == 6) daysToRemove++;
+			if (today === 0 || today === 6) daysToRemove++;
 			workingDate = workingDate + 3600000 * 24;
 		} while (workingDate < finishDate.getTime());
 		return diff - daysToRemove;
@@ -44,7 +45,6 @@ export class QuickView extends BaseAdaptiveCardView<
 	}
 
 	public get template(): ISPFxAdaptiveCard {
-		const card = require("./template/QuickViewTemplate.json");
 		Logger.log({ level: LogLevel.Verbose, message: "QuickView template getter invoked", data: card });
 		return card;
 	}

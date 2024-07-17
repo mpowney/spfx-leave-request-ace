@@ -1,4 +1,4 @@
-import { spfi, SPFx, SPFI, ISPFXContext } from "@pnp/sp";
+import { spfi, SPFx, SPFI } from "@pnp/sp";
 import { Logger, LogLevel } from "@pnp/logging";
 import { AdaptiveCardExtensionContext } from "@microsoft/sp-adaptive-card-extension-base";
 import "@pnp/sp/webs";
@@ -6,9 +6,9 @@ import "@pnp/sp/lists";
 import "@pnp/sp/items";
 import "@pnp/sp/fields";
 import { Constants } from "../../common/Constants";
-import { IList, IListAddResult, IListInfo } from "@pnp/sp/lists";
+import { IList, IListInfo } from "@pnp/sp/lists";
 import { LeaveType } from "../../model/LeaveType";
-import { ChoiceFieldFormatType, FieldTypes } from "@pnp/sp/fields";
+import { ChoiceFieldFormatType } from "@pnp/sp/fields";
 import { ISharePointList } from "./ISharePointList";
 
 export class LeaveBalance implements ISharePointList {
@@ -16,7 +16,7 @@ export class LeaveBalance implements ISharePointList {
 	public list?: IList;
 
 	constructor(protected context: AdaptiveCardExtensionContext) {
-		this.sp = spfi().using(SPFx(context));
+		this.sp = spfi().using(SPFx(context as any));
 	}
 
 	public async checkProvisioned(): Promise<boolean> {
@@ -47,7 +47,7 @@ export class LeaveBalance implements ISharePointList {
 				const listInfo: Partial<IListInfo> = {
 					OnQuickLaunch: false,
 				};
-				const result: IListAddResult = await this.sp.web.lists.add(
+				await this.sp.web.lists.add(
 					Constants.LeaveBalanceListName,
 					Constants.LeaveBalanceListDescription,
 					100,
@@ -55,7 +55,7 @@ export class LeaveBalance implements ISharePointList {
 					listInfo
 				);
 				if (await this.checkProvisioned()) {
-					await this.list.fields.addChoice(Constants.LeaveBalanceFieldType, {
+					await this.list?.fields.addChoice(Constants.LeaveBalanceFieldType, {
 							EditFormat: ChoiceFieldFormatType.Dropdown, 
 							FillInChoice: false,
 							Choices: [
@@ -67,8 +67,8 @@ export class LeaveBalance implements ISharePointList {
 								LeaveType.LongService,
 							],
 						});
-					await this.list.fields.addText(Constants.LeaveBalanceFieldUser);
-					await this.list.fields.addNumber(Constants.LeaveBalanceFieldBalance);
+					await this.list?.fields.addText(Constants.LeaveBalanceFieldUser);
+					await this.list?.fields.addNumber(Constants.LeaveBalanceFieldBalance);
 				}
 				await this.ensureSampleData();
 				return true;
@@ -88,8 +88,8 @@ export class LeaveBalance implements ISharePointList {
 	public async ensureSampleData(): Promise<boolean> {
 		if (await this.checkProvisioned()) {
 			try {
-				if ((await this.list.items.top(1)()).length === 0) {
-					await this.list.items.add({
+				if (this.list && (await this.list.items.top(1)()).length === 0) {
+					await this.list?.items.add({
 						Title: `${this.context.pageContext.user.loginName}-${LeaveType.Annual}`,
 						[Constants.LeaveBalanceFieldUser]: this.context.pageContext.user.loginName,
 						[Constants.LeaveBalanceFieldType]: LeaveType.Annual,
@@ -104,7 +104,7 @@ export class LeaveBalance implements ISharePointList {
 				});
 				return false;
 			}
-		};
+		}
 		return false;
 	}
 
@@ -114,13 +114,13 @@ export class LeaveBalance implements ISharePointList {
 			await this.ensureProvisioned();
 		} 
 		try {
-			const items = await this.list.items
+			const items = await this.list?.items
 				.filter(`${Constants.LeaveBalanceFieldUser} eq '${username}' and ${Constants.LeaveBalanceFieldType} eq '${type}'`)
 				.select(Constants.LeaveBalanceFieldBalance)();
-			if (items.length === 0) {
+			if (items?.length === 0) {
 				Logger.log({ level: LogLevel.Warning, message: `LeaveBalance getLeaveBalance - record for user ${username} doesn't exist` });
 			} else {
-				return items[0][Constants.LeaveBalanceFieldBalance];
+				return items ? items[0][Constants.LeaveBalanceFieldBalance] : 0;
 			}
 		} catch (ex) {
 			Logger.log({

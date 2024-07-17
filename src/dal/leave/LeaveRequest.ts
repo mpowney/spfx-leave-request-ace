@@ -6,9 +6,9 @@ import "@pnp/sp/lists";
 import "@pnp/sp/items";
 import "@pnp/sp/fields";
 import { Constants } from "../../common/Constants";
-import { IList, IListAddResult, IListInfo } from "@pnp/sp/lists";
+import { IList, IListInfo } from "@pnp/sp/lists";
 import { LeaveType } from "../../model/LeaveType";
-import { ChoiceFieldFormatType, FieldTypes } from "@pnp/sp/fields";
+import { ChoiceFieldFormatType } from "@pnp/sp/fields";
 import { ISharePointList } from "./ISharePointList";
 import { ILeaveRequest } from "../../model/ILeaveRequest";
 
@@ -17,7 +17,7 @@ export class LeaveRequest implements ISharePointList {
 	public list?: IList;
 
 	constructor(protected context: ISPFXContext | AdaptiveCardExtensionContext) {
-		this.sp = spfi().using(SPFx(context));
+		this.sp = spfi().using(SPFx(context as any));
 	}
 
 	public async checkProvisioned(): Promise<boolean> {
@@ -48,7 +48,7 @@ export class LeaveRequest implements ISharePointList {
 				const listInfo: Partial<IListInfo> = {
 					OnQuickLaunch: false,
 				};
-				const result: IListAddResult = await this.sp.web.lists.add(
+				await this.sp.web.lists.add(
 					Constants.LeaveRequestListName,
 					Constants.LeaveRequestListDescription,
 					100,
@@ -56,7 +56,7 @@ export class LeaveRequest implements ISharePointList {
 					listInfo
 				);
 				if (await this.checkProvisioned()) {
-					await this.list.fields.addChoice(Constants.LeaveRequestFieldType, {
+					await this.list?.fields.addChoice(Constants.LeaveRequestFieldType, {
 						EditFormat: ChoiceFieldFormatType.Dropdown,
 						FillInChoice: false,
 						Choices: [
@@ -68,11 +68,11 @@ export class LeaveRequest implements ISharePointList {
 							LeaveType.LongService,
 						],
 					});
-					await this.list.fields.addText(Constants.LeaveRequestFieldUser);
-					await this.list.fields.addDateTime(Constants.LeaveRequestFieldStart);
-					await this.list.fields.addDateTime(Constants.LeaveRequestFieldFinish);
-					await this.list.fields.addNumber(Constants.LeaveRequestFieldCalculatedAmount);
-					await this.list.fields.addBoolean(Constants.LeaveRequestFieldApproved, { Required: false });
+					await this.list?.fields.addText(Constants.LeaveRequestFieldUser);
+					await this.list?.fields.addDateTime(Constants.LeaveRequestFieldStart);
+					await this.list?.fields.addDateTime(Constants.LeaveRequestFieldFinish);
+					await this.list?.fields.addNumber(Constants.LeaveRequestFieldCalculatedAmount);
+					await this.list?.fields.addBoolean(Constants.LeaveRequestFieldApproved, { Required: false });
 				}
 			} catch (ex) {
 				Logger.log({
@@ -94,7 +94,7 @@ export class LeaveRequest implements ISharePointList {
 			Logger.log({ level: LogLevel.Warning, message: `LeaveRequest submitLeaveRequest - list not provisioned` });
 			await this.ensureProvisioned();
 		}
-		const response = await this.list.items.add({
+		const response = await this.list?.items.add({
 			Title: `${username}-${type}-${startDate.toISOString()}`,
 			[Constants.LeaveRequestFieldUser]: username,
 			[Constants.LeaveRequestFieldType]: type,
@@ -103,7 +103,7 @@ export class LeaveRequest implements ISharePointList {
 			[Constants.LeaveRequestFieldCalculatedAmount]: calculatedHours,
 			[Constants.LeaveRequestFieldApproved]: false,
 		});
-		if (response.data) {
+		if (response?.data) {
 			return response.data?.Id;
 		} else {
 			Logger.log({ level: LogLevel.Error, message: `LeaveRequest submitLeaveRequest - failed to create request record` });
@@ -111,7 +111,7 @@ export class LeaveRequest implements ISharePointList {
 		}
 	}
 
-	private static mapSPItem = (spListItem): ILeaveRequest => {
+	private static mapSPItem = (spListItem: any): ILeaveRequest => {
 		return {
 			username: spListItem[Constants.LeaveRequestFieldUser],
 			type: spListItem[Constants.LeaveRequestFieldType],
@@ -128,7 +128,7 @@ export class LeaveRequest implements ISharePointList {
 			await this.ensureProvisioned();
 		}
 		try {
-			const items = await this.list.items
+			const items = await this.list?.items
 				.filter(`${Constants.LeaveRequestFieldUser} eq '${username}' and ${Constants.LeaveRequestFieldType} eq '${type}' and ${Constants.LeaveRequestFieldApproved} eq ${approved ? 1 : 0}`)
 				.select(
 					Constants.LeaveRequestFieldUser,
@@ -138,10 +138,10 @@ export class LeaveRequest implements ISharePointList {
 					Constants.LeaveRequestFieldCalculatedAmount,
 					Constants.LeaveRequestFieldApproved
 				)();
-			if (items.length === 0) {
+			if (items?.length === 0) {
 				Logger.log({ level: LogLevel.Info, message: `LeaveRequest getLeaveRequests - no records for user ${username}` });
 			} else {
-				return items.map(LeaveRequest.mapSPItem);
+				return items?.map(LeaveRequest.mapSPItem) || [];
 			}
 		} catch (ex) {
 			Logger.log({

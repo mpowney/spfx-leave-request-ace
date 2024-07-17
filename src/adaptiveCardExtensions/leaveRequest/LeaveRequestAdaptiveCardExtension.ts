@@ -72,6 +72,7 @@ export default class LeaveRequestAdaptiveCardExtension extends BaseAdaptiveCardE
 	}
 
 	protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		return this._deferredPropertyPane!.getPropertyPaneConfiguration();
 	}
 }
