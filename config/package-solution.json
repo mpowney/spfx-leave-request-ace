@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
-    "name": "spfx-leave-request-ace-client-side-solution",
+    "name": "Viva Connections Adaptive Card - SharePoint Leave Requests",
     "id": "4af61edd-cf73-4ac5-b343-b72f96871246",
     "version": "1.0.0.0",
     "includeClientSideAssets": true,

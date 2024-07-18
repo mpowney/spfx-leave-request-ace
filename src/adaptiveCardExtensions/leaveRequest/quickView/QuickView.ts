@@ -4,7 +4,7 @@ import * as strings from "LeaveRequestAdaptiveCardExtensionStrings";
 import { LeaveRequest } from "../../../dal/leave/LeaveRequest";
 import { LeaveType } from "../../../model/LeaveType";
 import { ILeaveRequestAdaptiveCardExtensionProps, ILeaveRequestAdaptiveCardExtensionState } from "../LeaveRequestAdaptiveCardExtension";
-import * as card from "./template/QuickViewTemplate.json";
+import card from "./template/QuickViewTemplate.json";
 
 export interface IQuickViewData {
 	leaveBalances: [{ leaveTypeLabel: string; leaveBalance: string }];

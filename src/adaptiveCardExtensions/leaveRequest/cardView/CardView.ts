@@ -11,7 +11,7 @@ import {
 	ILeaveRequestAdaptiveCardExtensionState,
 	QUICK_VIEW_REGISTRY_ID,
 } from "../LeaveRequestAdaptiveCardExtension";
-import * as cardImage from "../assets/beach_PNG3.png";
+import cardImage from "../assets/beach_PNG3.png";
 
 export class CardView extends BaseImageCardView<ILeaveRequestAdaptiveCardExtensionProps, ILeaveRequestAdaptiveCardExtensionState> {
 	/**
